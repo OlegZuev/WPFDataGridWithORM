@@ -18,7 +18,23 @@ namespace WPFDataGridWithORM.Models {
         [Column("name")]
         public string Name { get; set; }
 
-        [Column("popularity")] public int Popularity { get; set; }
+        [Column("popularity")]
+        [DependsOn(nameof(PopularityText))]
+        public int Popularity { get; set; }
+
+        private string _popularityText;
+
+        [NotMapped]
+        public string PopularityText {
+            get => _popularityText;
+            set {
+                if (int.TryParse(value, out int result)) {
+                    Popularity = result;
+                }
+
+                _popularityText = value;
+            }
+        }
 
         [Column("literature_type_id")] public int LiteratureTypeId { get; set; }
 
@@ -43,7 +59,7 @@ namespace WPFDataGridWithORM.Models {
             _inEdit = false;
             Id = _backupCopy.Id;
             Name = _backupCopy.Name;
-            Popularity = _backupCopy.Popularity;
+            PopularityText = _backupCopy.PopularityText;
             LiteratureTypeId = _backupCopy.LiteratureTypeId;
         }
 
@@ -66,6 +82,10 @@ namespace WPFDataGridWithORM.Models {
             builder.RuleFor(genre => genre.Name)
                    .Must(name => genres == null || !genres.Any(genre => genre.Id != Id && genre.Name == name))
                    .WithMessage("Name should be unique");
+            builder.RuleFor(genre => genre.PopularityText)
+                   .Must(popularityText =>
+                             int.TryParse(popularityText, out int result) && result >= 0 && result <= 100)
+                   .WithMessage("Popularity should be between 0 and 100");
 
             return builder.Build(this);
         }

@@ -19,6 +19,7 @@ namespace WPFDataGridWithORM.ViewModels {
             }
 
             foreach (Genre genre in Genres) {
+                genre.PopularityText = genre.Popularity.ToString();
                 genre.InitializeValidator(Genres);
             }
 

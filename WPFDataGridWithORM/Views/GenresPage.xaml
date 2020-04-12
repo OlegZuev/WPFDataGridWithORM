@@ -25,7 +25,7 @@
                                     ElementStyle="{StaticResource TextBlockValidator}"
                                     EditingElementStyle="{StaticResource TextBoxValidator}" />
                 <DataGridTextColumn Header="Popularity"
-                                    Binding="{Binding Popularity, UpdateSourceTrigger=PropertyChanged}"
+                                    Binding="{Binding PopularityText, UpdateSourceTrigger=PropertyChanged}"
                                     ElementStyle="{StaticResource TextBlockValidator}"
                                     EditingElementStyle="{StaticResource TextBoxValidator}" />
                 <DataGridComboBoxColumn Header="Literature type" ItemsSource="{Binding Source={StaticResource LiteratureTypes}, UpdateSourceTrigger=PropertyChanged, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}"
